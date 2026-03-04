@@ -80,14 +80,14 @@ PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 TF_DIR="${PROJECT_ROOT}/terraform/environments/${ENVIRONMENT}"
 
 # Validate Terraform directory exists
-if [ ! -d "$TF_DIR" ]; then
+if [[ ! -d "$TF_DIR" ]]; then
     echo -e "${RED}Error: Terraform directory not found: ${TF_DIR}${NC}"
     exit 1
 fi
 
 # Get AWS Account ID
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text 2>/dev/null)
-if [ -z "$AWS_ACCOUNT_ID" ]; then
+if [[ -z "$AWS_ACCOUNT_ID" ]]; then
     echo -e "${RED}Error: Unable to get AWS Account ID. Check AWS credentials.${NC}"
     exit 1
 fi
@@ -146,7 +146,7 @@ case $ACTION in
         ;;
     apply)
         echo -e "${YELLOW}Running Terraform apply...${NC}"
-        if [ "$AUTO_APPROVE" = true ]; then
+        if [[ "$AUTO_APPROVE" = true ]]; then
             terraform apply \
                 -var="aws_region=${AWS_REGION}" \
                 -var="project=${PROJECT_NAME}" \
@@ -169,7 +169,7 @@ case $ACTION in
         ;;
     destroy)
         echo -e "${RED}Running Terraform destroy...${NC}"
-        if [ "$AUTO_APPROVE" = true ]; then
+        if [[ "$AUTO_APPROVE" = true ]]; then
             terraform destroy \
                 -var="aws_region=${AWS_REGION}" \
                 -var="project=${PROJECT_NAME}" \

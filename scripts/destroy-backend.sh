@@ -55,7 +55,7 @@ PROJECT_NAME="${PROJECT_NAME:-$DEFAULT_PROJECT}"
 
 # Get AWS Account ID
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text 2>/dev/null)
-if [ -z "$AWS_ACCOUNT_ID" ]; then
+if [[ -z "$AWS_ACCOUNT_ID" ]]; then
     echo -e "${RED}Error: Unable to get AWS Account ID${NC}"
     exit 1
 fi
@@ -73,9 +73,9 @@ echo ""
 echo -e "${RED}All Terraform state files will be PERMANENTLY DELETED!${NC}"
 echo ""
 
-if [ "$FORCE" != true ]; then
+if [[ "$FORCE" != true ]]; then
     read -p "Type 'destroy' to confirm: " CONFIRM
-    if [ "$CONFIRM" != "destroy" ]; then
+    if [[ "$CONFIRM" != "destroy" ]]; then
         echo -e "${GREEN}Aborted.${NC}"
         exit 0
     fi
@@ -89,7 +89,7 @@ if aws s3api head-bucket --bucket "$BUCKET_NAME" 2>/dev/null; then
         --query 'Versions[].{Key:Key,VersionId:VersionId}' --output json 2>/dev/null | \
         jq -r '.[] | "--key \(.Key) --version-id \(.VersionId)"' 2>/dev/null | \
         while read -r args; do
-            if [ -n "$args" ]; then
+            if [[ -n "$args" ]]; then
                 eval aws s3api delete-object --bucket "$BUCKET_NAME" $args
             fi
         done
@@ -99,7 +99,7 @@ if aws s3api head-bucket --bucket "$BUCKET_NAME" 2>/dev/null; then
         --query 'DeleteMarkers[].{Key:Key,VersionId:VersionId}' --output json 2>/dev/null | \
         jq -r '.[] | "--key \(.Key) --version-id \(.VersionId)"' 2>/dev/null | \
         while read -r args; do
-            if [ -n "$args" ]; then
+            if [[ -n "$args" ]]; then
                 eval aws s3api delete-object --bucket "$BUCKET_NAME" $args
             fi
         done
@@ -122,7 +122,7 @@ fi
 
 # Remove local config files
 OUTPUT_DIR="$(dirname "$0")/../.terraform-backend"
-if [ -d "$OUTPUT_DIR" ]; then
+if [[ -d "$OUTPUT_DIR" ]]; then
     rm -rf "$OUTPUT_DIR"
     echo -e "${GREEN}✓ Local config files removed${NC}"
 fi

@@ -50,7 +50,7 @@ PROJECT_NAME="${PROJECT_NAME:-$DEFAULT_PROJECT}"
 
 # Get AWS Account ID
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text 2>/dev/null)
-if [ -z "$AWS_ACCOUNT_ID" ]; then
+if [[ -z "$AWS_ACCOUNT_ID" ]]; then
     echo -e "${RED}Error: Unable to get AWS Account ID. Please configure AWS credentials.${NC}"
     exit 1
 fi
@@ -88,7 +88,7 @@ if bucket_exists "$BUCKET_NAME"; then
     echo -e "${GREEN}✓ S3 bucket already exists: ${BUCKET_NAME}${NC}"
 else
     # Create bucket (different command for us-east-1)
-    if [ "$AWS_REGION" == "us-east-1" ]; then
+    if [[ "$AWS_REGION" == "us-east-1" ]]; then
         aws s3api create-bucket \
             --bucket "$BUCKET_NAME" \
             --region "$AWS_REGION"

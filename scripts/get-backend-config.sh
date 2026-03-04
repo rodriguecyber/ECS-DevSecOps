@@ -49,7 +49,7 @@ PROJECT_NAME="${PROJECT_NAME:-$DEFAULT_PROJECT}"
 
 # Get AWS Account ID
 AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text 2>/dev/null)
-if [ -z "$AWS_ACCOUNT_ID" ]; then
+if [[ -z "$AWS_ACCOUNT_ID" ]]; then
     echo "Error: Unable to get AWS Account ID" >&2
     exit 1
 fi
