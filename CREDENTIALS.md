@@ -4,7 +4,7 @@ This document provides detailed instructions for obtaining and configuring all r
 
 ---
 
-## 📋 Overview
+## 📋 Overview 
 
 | # | Credential | Purpose | Where to Store |
 |---|------------|---------|----------------|
