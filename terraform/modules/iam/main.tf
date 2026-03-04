@@ -35,6 +35,36 @@ resource "aws_iam_role_policy" "execution_secrets" {
   })
 }
 
+# Explicit ECR pull so ECS can pull images (backup to managed policy)
+resource "aws_iam_role_policy" "execution_ecr" {
+  count = var.ecr_repository_arn != "" ? 1 : 0
+
+  name = "${var.name}-ecr-pull"
+  role = aws_iam_role.execution.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "ecr:GetAuthorizationToken"
+        ]
+        Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "ecr:BatchCheckLayerAvailability",
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:BatchGetImage"
+        ]
+        Resource = var.ecr_repository_arn
+      }
+    ]
+  })
+}
+
 # Task Role
 resource "aws_iam_role" "task" {
   name = "${var.name}-ecs-task-role"

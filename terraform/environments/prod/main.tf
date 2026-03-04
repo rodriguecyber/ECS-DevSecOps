@@ -92,9 +92,10 @@ module "alb" {
 module "iam" {
   source = "../../modules/iam"
 
-  name          = local.name
-  log_group_arn = module.ecs.log_group_arn
-  tags          = local.tags
+  name                 = local.name
+  log_group_arn        = module.ecs.log_group_arn
+  ecr_repository_arn   = module.ecr.repository_arn
+  tags                 = local.tags
 }
 
 # ECS

@@ -8,6 +8,12 @@ variable "log_group_arn" {
   type        = string
 }
 
+variable "ecr_repository_arn" {
+  description = "ECR repository ARN (for explicit pull permissions)"
+  type        = string
+  default     = ""
+}
+
 variable "tags" {
   description = "Resource tags"
   type        = map(string)
