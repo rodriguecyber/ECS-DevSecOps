@@ -82,7 +82,7 @@ pipeline {
         stage('Initialize') {
             steps {
                 script {
-                    sh "mkdir -p ${REPORTS_DIR} ${SBOM_DIR}"
+                    sh "mkdir -p ${env.REPORTS_DIR} ${env.SBOM_DIR}"
                 }
             }
         }
@@ -409,7 +409,7 @@ pipeline {
 
     post {
         always {
-            archiveArtifacts artifacts: "${REPORTS_DIR}/**/*,${SBOM_DIR}/**/*", allowEmptyArchive: true
+            archiveArtifacts artifacts: "${env.REPORTS_DIR}/**/*,${env.SBOM_DIR}/**/*", allowEmptyArchive: true
             sh "docker logout ${env.ECR_REGISTRY} || true"
             cleanWs()
         }
