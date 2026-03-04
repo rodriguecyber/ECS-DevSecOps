@@ -6,7 +6,7 @@ This project implements a **hardened CI/CD pipeline** for a containerized Node.j
 
 ---
 
-## ✅ Feature Implementation Checklist   
+## ✅ Feature Implementation Checklist    
 
 | Requirement | Implemented | Location | Tool Used |
 |-------------|-------------|----------|-----------|
